@@ -2,13 +2,22 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Inventario JS - Tailwind</title>
+  <title>Inventario-App</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 p-8 font-sans">
-  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-    <h1 class="text-2xl font-bold mb-4 text-center">Gestión de Productos</h1>
 
+  <div class="max-w-4xl mx-auto flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Gestión de Productos</h1>
+    <div>
+      <span id="usuarioNombre" class="mr-4 text-gray-600 font-medium"></span>
+      <button onclick="cerrarSesion()" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+
+  <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
     <form id="formulario" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
       <input type="hidden" id="producto-id">
       <input type="text" id="nombre" placeholder="Nombre del producto" required class="border p-2 rounded">
@@ -36,6 +45,19 @@
   <script>
     const formulario = document.getElementById('formulario');
     const tabla = document.getElementById('tabla');
+
+    // Verifica si hay un usuario logueado
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if (!usuario) {
+      window.location.href = 'login.html'; // ✅ Redirige al login si no hay sesión
+    } else {
+      document.getElementById('usuarioNombre').textContent = `Usuario: ${usuario.username}`;
+    }
+
+    function cerrarSesion() {
+      localStorage.removeItem('usuario');
+      window.location.href = 'index.html';
+    }
 
     async function cargarProductos() {
       const res = await fetch('/api/productos');
