@@ -2,8 +2,8 @@
 
 1.Clona el repositorio
 
-git clone https://github.com/usuario/repositorio.git
-cd repositorio
+git clone https://github.com/JeMax25/inventario-APP.git
+cd  repositorio
 
 2.Instala dependencias
 
